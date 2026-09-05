@@ -162,12 +162,9 @@ public class E2EEOptionsMappingTests
     }
 
     [Theory]
-    [InlineData(KeyDerivationFunction.Pbkdf2, Proto.KeyDerivationFunction.Pbkdf2)]
-    [InlineData(KeyDerivationFunction.Hkdf, Proto.KeyDerivationFunction.Hkdf)]
-    public void RoomOptions_ToProto_MapsKeyDerivationFunction(
-        KeyDerivationFunction kdf,
-        Proto.KeyDerivationFunction expected
-    )
+    [InlineData(Proto.KeyDerivationFunction.Pbkdf2)]
+    [InlineData(Proto.KeyDerivationFunction.Hkdf)]
+    public void RoomOptions_ToProto_MapsKeyDerivationFunction(Proto.KeyDerivationFunction kdf)
     {
         var options = new RoomOptions
         {
@@ -177,7 +174,7 @@ public class E2EEOptionsMappingTests
             },
         };
 
-        Assert.Equal(expected, options.ToProto().Encryption!.KeyProviderOptions.KeyDerivationFunction);
+        Assert.Equal(kdf, options.ToProto().Encryption!.KeyProviderOptions.KeyDerivationFunction);
     }
 
     [Fact]
@@ -185,6 +182,6 @@ public class E2EEOptionsMappingTests
     {
         // Upstream's and livekit-client's default for a shared passphrase. Raw per-participant
         // keys need HKDF and must opt in, which is what the property is for.
-        Assert.Equal(KeyDerivationFunction.Pbkdf2, new KeyProviderOptions().KeyDerivationFunction);
+        Assert.Equal(Proto.KeyDerivationFunction.Pbkdf2, new KeyProviderOptions().KeyDerivationFunction);
     }
 }

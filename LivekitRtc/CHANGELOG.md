@@ -9,7 +9,7 @@
   upstream release. Shipped runtimes: win-x64, linux-x64 (manylinux_2_28).
 - Protos regenerated with protoc 25.2. The FFI protocol is byte-identical between the previous pin
   (upstream `2d9f01ab`) and this one; the diff in `Proto/*.g.cs` is protoc output style only.
-- `KeyProviderOptions.KeyDerivationFunction` (PBKDF2, the upstream default, or HKDF). Upstream hard-coded
+- `KeyProviderOptions.KeyDerivationFunction` (`Proto.KeyDerivationFunction`; PBKDF2, the upstream default, or HKDF). Upstream hard-coded
   PBKDF2, which cannot decrypt frames from a livekit-client peer that imported raw per-participant key
   bytes, since that path derives with HKDF.
 - The linux-x64 native is built in plain `manylinux_2_28` without CUDA, so it lacks the NVIDIA hardware

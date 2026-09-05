@@ -69,23 +69,12 @@ namespace LiveKit.Rtc
         /// How the native cryptor derives per-frame keys from the material handed to
         /// <see cref="KeyProvider"/>. Must match the peers: livekit-client uses PBKDF2 for a
         /// string passphrase (shared key) and HKDF for raw key bytes imported per participant,
-        /// so a room keyed with raw per-participant keys must select <see cref="KeyDerivationFunction.Hkdf"/>.
-        /// Defaults to PBKDF2, the upstream and livekit-client default for shared passphrases.
+        /// so a room keyed with raw per-participant keys must select
+        /// <see cref="Proto.KeyDerivationFunction.Hkdf"/>. Defaults to PBKDF2, the upstream and
+        /// livekit-client default for shared passphrases.
         /// </summary>
-        public KeyDerivationFunction KeyDerivationFunction { get; set; } =
-            KeyDerivationFunction.Pbkdf2;
-    }
-
-    /// <summary>
-    /// Key derivation functions the native cryptor supports.
-    /// </summary>
-    public enum KeyDerivationFunction
-    {
-        /// <summary>PBKDF2; what livekit-client uses for a string passphrase.</summary>
-        Pbkdf2,
-
-        /// <summary>HKDF; what livekit-client uses for raw key bytes imported per participant.</summary>
-        Hkdf,
+        public Proto.KeyDerivationFunction KeyDerivationFunction { get; set; } =
+            Proto.KeyDerivationFunction.Pbkdf2;
     }
 
     /// <summary>
@@ -121,11 +110,7 @@ namespace LiveKit.Rtc
                     // A key ring size of 0 makes the FFI create an empty key ring, after which
                     // no frames are ever delivered, so it must always be sent as a positive value.
                     KeyRingSize = KeyProviderOptions.KeyRingSize,
-                    KeyDerivationFunction = KeyProviderOptions.KeyDerivationFunction switch
-                    {
-                        KeyDerivationFunction.Hkdf => LiveKit.Proto.KeyDerivationFunction.Hkdf,
-                        _ => LiveKit.Proto.KeyDerivationFunction.Pbkdf2,
-                    },
+                    KeyDerivationFunction = KeyProviderOptions.KeyDerivationFunction,
                 },
             };
 
