@@ -52,7 +52,8 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-            D:\lk-target          key: cargo-win-x64-${{ hashFiles('LivekitRtc/rust-sdks/Cargo.lock') }}
+            D:\lk-target
+          key: cargo-win-x64-${{ hashFiles('LivekitRtc/rust-sdks/Cargo.lock') }}
           restore-keys: cargo-win-x64-
 
       - name: Build livekit_ffi
