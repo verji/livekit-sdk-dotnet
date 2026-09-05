@@ -28,6 +28,11 @@ jobs:
   native-win-x64:
     name: Native (win-x64)
     runs-on: windows-latest
+    env:
+      # The libwebrtc archive unpacks under the cargo target dir, and its include tree is deep.
+      # Under the runner's checkout path that crosses Windows' 260-character limit and headers
+      # go missing at compile time ("Cannot open include file"), so the target dir is a short root.
+      CARGO_TARGET_DIR: D:\lk-target
     steps:
       - uses: actions/checkout@v4
         with:
@@ -47,8 +52,7 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-            LivekitRtc/rust-sdks/target/
-          key: cargo-win-x64-${{ hashFiles('LivekitRtc/rust-sdks/Cargo.lock') }}
+            D:\lk-target          key: cargo-win-x64-${{ hashFiles('LivekitRtc/rust-sdks/Cargo.lock') }}
           restore-keys: cargo-win-x64-
 
       - name: Build livekit_ffi
