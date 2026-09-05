@@ -482,3 +482,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Native libraries are built from the rust-sdks submodule (scripts/build-native.sh) or by CI; never committed.
+LivekitRtc/runtimes/

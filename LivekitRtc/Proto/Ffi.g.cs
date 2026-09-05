@@ -413,6 +413,7 @@ namespace LiveKit.Proto {
   /// This is the input of livekit_ffi_request function
   /// We always expect a response (FFIResponse, even if it's empty)
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class FfiRequest : pb::IMessage<FfiRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -5148,6 +5149,7 @@ namespace LiveKit.Proto {
   /// <summary>
   /// This is the output of livekit_ffi_request function.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class FfiResponse : pb::IMessage<FfiResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -9832,6 +9834,7 @@ namespace LiveKit.Proto {
   /// It is easily deducible from the room events and it turned out that is is easier to implement
   /// on the ffi client side.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class FfiEvent : pb::IMessage<FfiEvent>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12416,6 +12419,7 @@ namespace LiveKit.Proto {
   /// e.g: This is used for the Unity Editor after each assemblies reload.
   /// TODO(theomonnom): Implement a debug mode where we can find all leaked handles?
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class DisposeRequest : pb::IMessage<DisposeRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12622,6 +12626,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class DisposeResponse : pb::IMessage<DisposeResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12831,6 +12836,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class DisposeCallback : pb::IMessage<DisposeCallback>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -13037,6 +13043,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class LogRecord : pb::IMessage<LogRecord>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -13502,6 +13509,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class LogBatch : pb::IMessage<LogBatch>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -13680,6 +13688,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class Panic : pb::IMessage<Panic>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage

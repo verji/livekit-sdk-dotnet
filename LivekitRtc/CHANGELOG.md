@@ -1,5 +1,14 @@
 # Changelog (Release Notes)
 
+## 0.2.0 (Verji fork, `LiveKitSdk.Bindings`)
+
+- First release from [verji/livekit-sdk-dotnet](https://github.com/verji/livekit-sdk-dotnet). Package id is
+  `LiveKitSdk.Bindings`; the namespace stays `LiveKit.Rtc`.
+- The native `livekit_ffi` is built from the [verji/rust-sdks](https://github.com/verji/rust-sdks) fork at
+  `verji-main` (upstream `main` at `90a9e45b`, livekit-ffi 0.12.76 line) instead of downloaded from an
+  upstream release. Shipped runtimes: win-x64, linux-x64 (manylinux_2_28).
+- Protos regenerated from that pin.
+
 ## 0.1.4
 
 - Update rust-sdks to [livekit-ffi/v0.12.76](https://github.com/livekit/rust-sdks/releases/tag/livekit-ffi%2Fv0.12.76)

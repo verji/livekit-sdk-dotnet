@@ -298,6 +298,7 @@ namespace LiveKit.Proto {
   /// Create a new AudioStream
   /// AudioStream is used to receive audio frames from a track
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewAudioStreamRequest : pb::IMessage<NewAudioStreamRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -880,6 +881,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewAudioStreamResponse : pb::IMessage<NewAudioStreamResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -1078,6 +1080,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AudioStreamFromParticipantRequest : pb::IMessage<AudioStreamFromParticipantRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -1709,6 +1712,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AudioStreamFromParticipantResponse : pb::IMessage<AudioStreamFromParticipantResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -1910,6 +1914,7 @@ namespace LiveKit.Proto {
   /// <summary>
   /// Create a new AudioSource
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewAudioSourceRequest : pb::IMessage<NewAudioSourceRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -2384,6 +2389,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewAudioSourceResponse : pb::IMessage<NewAudioSourceResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -2586,6 +2592,7 @@ namespace LiveKit.Proto {
   /// Push a frame to an AudioSource
   /// The data provided must be available as long as the client receive the callback.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class CaptureAudioFrameRequest : pb::IMessage<CaptureAudioFrameRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -2890,6 +2897,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class CaptureAudioFrameResponse : pb::IMessage<CaptureAudioFrameResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -3096,6 +3104,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class CaptureAudioFrameCallback : pb::IMessage<CaptureAudioFrameCallback>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -3353,6 +3362,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ClearAudioBufferRequest : pb::IMessage<ClearAudioBufferRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -3559,6 +3569,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ClearAudioBufferResponse : pb::IMessage<ClearAudioBufferResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -3714,6 +3725,7 @@ namespace LiveKit.Proto {
   /// <summary>
   /// Create a new AudioResampler
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewAudioResamplerRequest : pb::IMessage<NewAudioResamplerRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -3866,6 +3878,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewAudioResamplerResponse : pb::IMessage<NewAudioResamplerResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -4067,6 +4080,7 @@ namespace LiveKit.Proto {
   /// <summary>
   /// Remix and resample an audio frame
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class RemixAndResampleRequest : pb::IMessage<RemixAndResampleRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -4423,6 +4437,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class RemixAndResampleResponse : pb::IMessage<RemixAndResampleResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -4621,6 +4636,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewApmRequest : pb::IMessage<NewApmRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -4983,6 +4999,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewApmResponse : pb::IMessage<NewApmResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -5181,6 +5198,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ApmProcessStreamRequest : pb::IMessage<ApmProcessStreamRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -5601,6 +5619,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ApmProcessStreamResponse : pb::IMessage<ApmProcessStreamResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -5804,6 +5823,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ApmProcessReverseStreamRequest : pb::IMessage<ApmProcessReverseStreamRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -6224,6 +6244,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ApmProcessReverseStreamResponse : pb::IMessage<ApmProcessReverseStreamResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -6427,6 +6448,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ApmSetStreamDelayRequest : pb::IMessage<ApmSetStreamDelayRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -6685,6 +6707,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ApmSetStreamDelayResponse : pb::IMessage<ApmSetStreamDelayResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -6888,6 +6911,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewSoxResamplerRequest : pb::IMessage<NewSoxResamplerRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -7406,6 +7430,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewSoxResamplerResponse : pb::IMessage<NewSoxResamplerResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -7692,6 +7717,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class PushSoxResamplerRequest : pb::IMessage<PushSoxResamplerRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8008,6 +8034,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class PushSoxResamplerResponse : pb::IMessage<PushSoxResamplerResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8323,6 +8350,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class FlushSoxResamplerRequest : pb::IMessage<FlushSoxResamplerRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8529,6 +8557,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class FlushSoxResamplerResponse : pb::IMessage<FlushSoxResamplerResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8844,6 +8873,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AudioFrameBufferInfo : pb::IMessage<AudioFrameBufferInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -9209,6 +9239,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OwnedAudioFrameBuffer : pb::IMessage<OwnedAudioFrameBuffer>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -9453,6 +9484,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AudioStreamInfo : pb::IMessage<AudioStreamInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -9659,6 +9691,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OwnedAudioStream : pb::IMessage<OwnedAudioStream>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -9903,6 +9936,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AudioStreamEvent : pb::IMessage<AudioStreamEvent>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -10242,6 +10276,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AudioFrameReceived : pb::IMessage<AudioFrameReceived>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -10440,6 +10475,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AudioStreamEOS : pb::IMessage<AudioStreamEOS>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -10592,6 +10628,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AudioSourceOptions : pb::IMessage<AudioSourceOptions>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -10958,6 +10995,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AudioSourceInfo : pb::IMessage<AudioSourceInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -11164,6 +11202,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OwnedAudioSource : pb::IMessage<OwnedAudioSource>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -11408,6 +11447,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AudioResamplerInfo : pb::IMessage<AudioResamplerInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -11560,6 +11600,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OwnedAudioResampler : pb::IMessage<OwnedAudioResampler>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -11804,6 +11845,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OwnedApm : pb::IMessage<OwnedApm>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12002,6 +12044,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class SoxResamplerInfo : pb::IMessage<SoxResamplerInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12154,6 +12197,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OwnedSoxResampler : pb::IMessage<OwnedSoxResampler>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12401,6 +12445,7 @@ namespace LiveKit.Proto {
   /// <summary>
   /// Audio Filter Plugin
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class LoadAudioFilterPluginRequest : pb::IMessage<LoadAudioFilterPluginRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12690,6 +12735,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class LoadAudioFilterPluginResponse : pb::IMessage<LoadAudioFilterPluginResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12896,6 +12942,7 @@ namespace LiveKit.Proto {
   /// <summary>
   /// Information about an audio device.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class AudioDeviceInfo : pb::IMessage<AudioDeviceInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -13221,6 +13268,7 @@ namespace LiveKit.Proto {
   /// <summary>
   /// Information about a PlatformAudio instance.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class PlatformAudioInfo : pb::IMessage<PlatformAudioInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -13488,6 +13536,7 @@ namespace LiveKit.Proto {
   /// <summary>
   /// Owned PlatformAudio handle with info.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OwnedPlatformAudio : pb::IMessage<OwnedPlatformAudio>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -13741,6 +13790,7 @@ namespace LiveKit.Proto {
   /// The returned handle must be kept alive while platform audio is needed.
   /// When all handles are released, the ADM is automatically disabled.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewPlatformAudioRequest : pb::IMessage<NewPlatformAudioRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -13893,6 +13943,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class NewPlatformAudioResponse : pb::IMessage<NewPlatformAudioResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -14196,6 +14247,7 @@ namespace LiveKit.Proto {
   /// - Mobile (iOS/Android): Returns only one "default" device with empty name and GUID.
   ///   Device enumeration is not meaningful on mobile - use for device count only.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class GetAudioDevicesRequest : pb::IMessage<GetAudioDevicesRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -14405,6 +14457,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class GetAudioDevicesResponse : pb::IMessage<GetAudioDevicesResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -14681,6 +14734,7 @@ namespace LiveKit.Proto {
   /// - Mobile (iOS/Android): No-op. Mobile platforms handle microphone selection at the
   ///   system level. This will succeed but has no effect. Skip calling on mobile.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class SetRecordingDeviceRequest : pb::IMessage<SetRecordingDeviceRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -14944,6 +14998,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class SetRecordingDeviceResponse : pb::IMessage<SetRecordingDeviceResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -15165,6 +15220,7 @@ namespace LiveKit.Proto {
   ///   - iOS: Use AVAudioSession to control speaker/earpiece/Bluetooth routing
   ///   - Android: Use AudioManager.setSpeakerphoneOn() to switch outputs
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class SetPlayoutDeviceRequest : pb::IMessage<SetPlayoutDeviceRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -15428,6 +15484,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class SetPlayoutDeviceResponse : pb::IMessage<SetPlayoutDeviceResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -15642,6 +15699,7 @@ namespace LiveKit.Proto {
   /// Use this to resume recording after calling StopRecording.
   /// This also turns on the system's recording privacy indicator.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class StartRecordingRequest : pb::IMessage<StartRecordingRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -15851,6 +15909,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class StartRecordingResponse : pb::IMessage<StartRecordingResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -16065,6 +16124,7 @@ namespace LiveKit.Proto {
   /// This will turn off the system's recording privacy indicator (e.g., on macOS/iOS).
   /// Call StartRecording to resume recording.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class StopRecordingRequest : pb::IMessage<StopRecordingRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -16274,6 +16334,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class StopRecordingResponse : pb::IMessage<StopRecordingResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
