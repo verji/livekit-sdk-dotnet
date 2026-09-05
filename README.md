@@ -1,3 +1,49 @@
+# LiveKitSdk.Bindings — Verji's fork <!-- omit in toc -->
+
+[![CI](https://github.com/verji/livekit-sdk-dotnet/actions/workflows/ci.yml/badge.svg?branch=verji-main)](https://github.com/verji/livekit-sdk-dotnet/actions/workflows/ci.yml)
+
+This is Verji's fork of [pabloFuente/livekit-server-sdk-dotnet](https://github.com/pabloFuente/livekit-server-sdk-dotnet)
+(Apache-2.0). It exists so that Verji owns the .NET binding to LiveKit end to end, the way
+[matrix-sdk-dotnet](https://github.com/verji/matrix-sdk-dotnet) owns the Matrix one:
+
+- the native `livekit_ffi` is built **from the [verji/rust-sdks](https://github.com/verji/rust-sdks)
+  fork** (submodule at `LivekitRtc/rust-sdks`, branch `verji-main`), never downloaded from an upstream
+  release, so a fix in the fork ships in the next package;
+- the RTC package is published as **`LiveKitSdk.Bindings`** to the Verji GitHub Packages feed
+  (`https://nuget.pkg.github.com/verji/index.json`) for **win-x64 and linux-x64**, the two runtimes
+  Verji builds and deploys on;
+- the C# namespace stays `LiveKit.Rtc`, and `LivekitApi` (the server API package) is left as upstream
+  ships it and is not published from here.
+
+The integration branch is **`verji-main`**; `main` tracks upstream and is merged into `verji-main` to
+sync. The upstream README follows below and still describes the API.
+
+## Working on the fork <!-- omit in toc -->
+
+```bash
+git clone --recurse-submodules https://github.com/verji/livekit-sdk-dotnet
+scripts/build-native.sh        # livekit_ffi for the host, into LivekitRtc/runtimes/<rid>/native/
+scripts/generate-proto.sh      # LivekitRtc/Proto/*.g.cs from the submodule's FFI protocol (protoc 25.2 on PATH)
+dotnet build LivekitRtc.Tests/LivekitRtc.Tests.csproj
+```
+
+The generated protos are committed; CI regenerates them with **protoc 25.2** and fails on drift, so
+regenerate with that exact version (a different protoc emits different bytes for the same protocol).
+Native libraries are never committed. `CARGO_RUST_PROFILE=dev scripts/build-native.sh` gives an unstripped debug native.
+The submodule has submodules of its own (`libyuv`, `protocol`); a non-recursive checkout fails in
+`yuv-sys` with a message saying so. On Windows, `LivekitApi` (upstream's server package, not built
+here for its own sake but referenced by the tests) trips CSharpier's line-ending check; build with
+`-p:CSharpier_Bypass=true` there. CI runs on Linux, where the check passes.
+
+**Bumping the fork pin:** check out the wanted `verji-main` commit inside `LivekitRtc/rust-sdks`,
+run `scripts/generate-proto.sh`, build, commit the submodule and the regenerated protos together.
+
+**Releasing:** bump `<Version>` in `LivekitRtc/LivekitRtc.csproj` and `LivekitRtc/CHANGELOG.md`,
+merge to `verji-main`, then tag `v<Version>` on that commit. CI builds both natives, packs, checks
+the tag against the csproj, and pushes to the Verji feed.
+
+---
+
 [Livekit.Server.Sdk.Dotnet](#livekitserversdkdotnet) [![NuGet Version](https://img.shields.io/nuget/v/Livekit.Server.Sdk.Dotnet)](https://www.nuget.org/packages/Livekit.Server.Sdk.Dotnet) [![NuGet Downloads](https://img.shields.io/nuget/dt/Livekit.Server.Sdk.Dotnet)](https://www.nuget.org/stats/packages/Livekit.Server.Sdk.Dotnet?groupby=Version) | [Livekit.Rtc.Dotnet](#livekitrtcdotnet) [![NuGet Version](https://img.shields.io/nuget/v/Livekit.Rtc.Dotnet)](https://www.nuget.org/packages/Livekit.Rtc.Dotnet) [![NuGet Downloads](https://img.shields.io/nuget/dt/Livekit.Rtc.Dotnet)](https://www.nuget.org/stats/packages/Livekit.Rtc.Dotnet?groupby=Version)
 
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/pabloFuente/livekit-server-sdk-dotnet/dotnet.yml)](https://github.com/pabloFuente/livekit-server-sdk-dotnet/actions/workflows/dotnet.yml)

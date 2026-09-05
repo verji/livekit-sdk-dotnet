@@ -169,6 +169,7 @@ namespace LiveKit.Proto {
   #endregion
 
   #region Messages
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ParticipantInfo : pb::IMessage<ParticipantInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -729,7 +730,7 @@ namespace LiveKit.Proto {
       if (other.HasMetadata) {
         Metadata = other.Metadata;
       }
-      attributes_.Add(other.attributes_);
+      attributes_.MergeFrom(other.attributes_);
       if (other.HasKind) {
         Kind = other.Kind;
       }
@@ -890,6 +891,7 @@ namespace LiveKit.Proto {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OwnedParticipant : pb::IMessage<OwnedParticipant>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -1137,6 +1139,7 @@ namespace LiveKit.Proto {
   /// <summary>
   /// copied from livekit-protocol/protocol/protobufs/livekit_models.proto and removed deprecated fields
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ParticipantPermission : pb::IMessage<ParticipantPermission>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage

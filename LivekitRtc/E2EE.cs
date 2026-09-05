@@ -64,6 +64,17 @@ namespace LiveKit.Rtc
         /// Gets or sets the key ring size. Must be greater than zero.
         /// </summary>
         public int KeyRingSize { get; set; } = E2EEDefaults.KeyRingSize;
+
+        /// <summary>
+        /// How the native cryptor derives per-frame keys from the material handed to
+        /// <see cref="KeyProvider"/>. Must match the peers: livekit-client uses PBKDF2 for a
+        /// string passphrase (shared key) and HKDF for raw key bytes imported per participant,
+        /// so a room keyed with raw per-participant keys must select
+        /// <see cref="Proto.KeyDerivationFunction.Hkdf"/>. Defaults to PBKDF2, the upstream and
+        /// livekit-client default for shared passphrases.
+        /// </summary>
+        public Proto.KeyDerivationFunction KeyDerivationFunction { get; set; } =
+            Proto.KeyDerivationFunction.Pbkdf2;
     }
 
     /// <summary>
@@ -99,7 +110,7 @@ namespace LiveKit.Rtc
                     // A key ring size of 0 makes the FFI create an empty key ring, after which
                     // no frames are ever delivered, so it must always be sent as a positive value.
                     KeyRingSize = KeyProviderOptions.KeyRingSize,
-                    KeyDerivationFunction = LiveKit.Proto.KeyDerivationFunction.Pbkdf2,
+                    KeyDerivationFunction = KeyProviderOptions.KeyDerivationFunction,
                 },
             };
 

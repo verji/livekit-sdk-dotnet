@@ -1,0 +1,186 @@
+# Builds the native livekit_ffi from the verji/rust-sdks submodule for the two runtimes Verji
+# deploys to, then builds, tests and packs LiveKitSdk.Bindings against them. On a `v*` tag the
+# same run publishes the package to the Verji GitHub Packages feed.
+#
+# The trigger lists name verji-main, the fork's integration branch. A workflow that only names
+# `main` never runs on a fork's PRs, so everything looks green while nothing has been tested.
+
+name: CI
+
+on:
+  push:
+    branches: [verji-main]
+    tags: ['v*']
+  pull_request:
+    branches: [verji-main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+env:
+  CARGO_TERM_COLOR: always
+  DOTNET_NOLOGO: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+
+jobs:
+  native-win-x64:
+    name: Native (win-x64)
+    runs-on: windows-latest
+    env:
+      # The libwebrtc archive unpacks under the cargo target dir, and its include tree is deep.
+      # Under the runner's checkout path that crosses Windows' 260-character limit and headers
+      # go missing at compile time ("Cannot open include file"), so the target dir is a short root.
+      CARGO_TARGET_DIR: D:\lk-target
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # The submodule's rust-toolchain.toml selects the Rust version; this only guarantees rustup.
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: arduino/setup-protoc@v3
+        with:
+          version: "25.2"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            D:\lk-target
+          key: cargo-win-x64-${{ hashFiles('LivekitRtc/rust-sdks/Cargo.lock') }}
+          restore-keys: cargo-win-x64-
+
+      - name: Build livekit_ffi
+        shell: bash
+        run: CARGO_TARGET=x86_64-pc-windows-msvc bash scripts/build-native.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-win-x64
+          path: LivekitRtc/runtimes/win-x64/native/livekit_ffi.dll
+          if-no-files-found: error
+
+  native-linux-x64:
+    name: Native (linux-x64)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            LivekitRtc/rust-sdks/target/
+          key: cargo-linux-x64-${{ hashFiles('LivekitRtc/rust-sdks/Cargo.lock') }}
+          restore-keys: cargo-linux-x64-
+
+      # manylinux_2_28 keeps the .so's glibc floor at 2.28, so it loads on the Debian-based
+      # .NET runtime images Verji deploys. Same recipe as upstream's ffi-builds.yml.
+      - name: Build livekit_ffi (manylinux_2_28)
+        run: |
+          docker run --rm -v "$PWD:/workspace" -w /workspace quay.io/pypa/manylinux_2_28_x86_64 bash -c "\
+            export PATH=/root/.cargo/bin:\$PATH; \
+            yum install -y clang clang-devel lld protobuf-compiler openssl-devel \
+              libX11-devel mesa-libGL-devel libXext-devel libva-devel libdrm-devel libgbm-devel \
+              libXdamage-devel libXrandr-devel libXfixes-devel libXcomposite-devel; \
+            yum groupinstall -y 'Development Tools'; \
+            export LIBCLANG_PATH=/usr/lib64 CC=clang CXX=clang++; \
+            curl --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y; \
+            CARGO_TARGET=x86_64-unknown-linux-gnu bash scripts/build-native.sh"
+          sudo chown -R "$USER:$USER" LivekitRtc/rust-sdks/target LivekitRtc/runtimes
+
+      - name: Check glibc floor
+        run: |
+          objdump -T LivekitRtc/runtimes/linux-x64/native/liblivekit_ffi.so | grep -o 'GLIBC_[0-9.]*' | sort -Vu | tail -1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-linux-x64
+          path: LivekitRtc/runtimes/linux-x64/native/liblivekit_ffi.so
+          if-no-files-found: error
+
+  package:
+    name: Build, test, pack
+    needs: [native-win-x64, native-linux-x64]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - uses: arduino/setup-protoc@v3
+        with:
+          version: "25.2"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: native-win-x64
+          path: LivekitRtc/runtimes/win-x64/native/
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: native-linux-x64
+          path: LivekitRtc/runtimes/linux-x64/native/
+
+      # The committed C# must match the protocol of the native library it ships with.
+      - name: Check generated protos match the submodule
+        run: |
+          bash scripts/generate-proto.sh
+          git diff --exit-code -- LivekitRtc/Proto
+
+      - name: Build
+        run: dotnet build LivekitRtc.Tests/LivekitRtc.Tests.csproj -c Release
+
+      # Tests that need no LiveKit server. FfiClientTest and AudioCaptureMinimalTest load the
+      # freshly built linux-x64 native, so a library that does not load fails here, not at a
+      # consumer. The container-backed suites stay runnable locally (see LivekitRtc/README.md).
+      - name: Test
+        run: >
+          dotnet test LivekitRtc.Tests/LivekitRtc.Tests.csproj -c Release --no-build
+          --filter "FullyQualifiedName~E2EEOptionsMappingTests|FullyQualifiedName~TrackPublishOptionsMappingTests|FullyQualifiedName~FfiClientTest|FullyQualifiedName~AudioCaptureMinimalTest"
+          --logger "console;verbosity=normal"
+
+      - name: Pack
+        run: dotnet pack LivekitRtc/LivekitRtc.csproj -c Release --no-build -o nupkg
+
+      - name: Check the package carries both natives
+        run: |
+          set -euo pipefail
+          pkg=$(ls nupkg/LiveKitSdk.Bindings.*.nupkg)
+          unzip -l "$pkg" | tee /dev/stderr | grep -q 'runtimes/win-x64/native/livekit_ffi.dll'
+          unzip -l "$pkg" | grep -q 'runtimes/linux-x64/native/liblivekit_ffi.so'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nupkg
+          path: nupkg/*.nupkg
+          if-no-files-found: error
+
+      - name: Check tag matches package version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          version=$(grep -oPm1 '(?<=<Version>)[^<]+' LivekitRtc/LivekitRtc.csproj)
+          [ "v$version" = "${GITHUB_REF_NAME}" ] || { echo "tag ${GITHUB_REF_NAME} != v$version in LivekitRtc.csproj" >&2; exit 1; }
+
+      - name: Publish to the Verji feed
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: >
+          dotnet nuget push nupkg/*.nupkg
+          --source https://nuget.pkg.github.com/verji/index.json
+          --api-key ${{ secrets.GITHUB_TOKEN }}
+          --skip-duplicate

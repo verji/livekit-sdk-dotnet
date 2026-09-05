@@ -6,19 +6,18 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageId>Livekit.Rtc.Dotnet</PackageId>
-    <Version>0.1.4</Version>
-    <Authors>pabloFuente</Authors>
-    <MaintainerEmail>pablofuenteperez@gmail.com</MaintainerEmail>
-    <PackageProjectUrl>https://github.com/pabloFuente/livekit-server-sdk-dotnet</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/pabloFuente/livekit-server-sdk-dotnet</RepositoryUrl>
+    <PackageId>LiveKitSdk.Bindings</PackageId>
+    <Version>0.2.0</Version>
+    <Authors>Verji Tech AS;pabloFuente</Authors>
+    <PackageProjectUrl>https://github.com/verji/livekit-sdk-dotnet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/verji/livekit-sdk-dotnet</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Livekit;LiveKit;livekit;SDK;WebRTC;VoIP;Dotnet;realtime;RTC;audio;video</PackageTags>
     <Description>
-      .NET SDK to integrate LiveKit's real-time video, audio, and data capabilities into your .NET
-      applications using WebRTC. Access the same powerful API offered by client SDKs, but directly
-      from your .NET server: connect to rooms as a participant, publish and subscribe to audio/video
-      tracks, send and receive data messages, perform RPC calls, and more.
+      Verji's .NET binding to LiveKit's real-time video, audio, and data capabilities, built against
+      the verji/rust-sdks fork. Connect to rooms as a participant, publish and subscribe to
+      audio/video tracks, send and receive data messages, perform RPC calls, and more. Forked from
+      pabloFuente/livekit-server-sdk-dotnet (Apache-2.0).
     </Description>
   </PropertyGroup>
   <PropertyGroup>

@@ -135,4 +135,60 @@ public class E2EEOptionsMappingTests
         Assert.Equal(3, keyProvider.FailureTolerance);
         Assert.Equal(24, keyProvider.KeyRingSize);
     }
+
+    [Theory]
+    [InlineData(Proto.EncryptionType.None)]
+    [InlineData(Proto.EncryptionType.Gcm)]
+    [InlineData(Proto.EncryptionType.Custom)]
+    public void RoomOptions_ToProto_PassesEncryptionTypeThrough(Proto.EncryptionType type)
+    {
+        var options = new RoomOptions { E2EE = new E2EEOptions { EncryptionType = type } };
+
+        Assert.Equal(type, options.ToProto().Encryption!.EncryptionType);
+    }
+
+    [Fact]
+    public void RoomOptions_ToProto_DefaultsAreTheRustSdkDefaultsWithLivekitClientSalt()
+    {
+        // Two kinds of default, pinned for two reasons. The ratchet salt must be the same bytes
+        // on every peer or nothing decrypts; livekit-client's SALT constant is this string.
+        // Window and failure tolerance are receiver-local retry tuning: 16 and -1 are the Rust
+        // SDK's own defaults (livekit-client's are 8 and 10), and what Verji's clients set
+        // explicitly. Encryption type GCM is what a consumer who only sets key options gets.
+        var options = new E2EEOptions();
+        var proto = new RoomOptions { E2EE = options }.ToProto();
+        var kp = proto.Encryption!.KeyProviderOptions;
+
+        Assert.Equal(Proto.EncryptionType.Gcm, options.EncryptionType);
+        Assert.Equal(Proto.EncryptionType.Gcm, proto.Encryption.EncryptionType);
+        Assert.Equal("LKFrameEncryptionKey", kp.RatchetSalt.ToStringUtf8());
+        Assert.Equal(16, kp.RatchetWindowSize);
+        Assert.Equal(-1, kp.FailureTolerance);
+        Assert.Equal(16, kp.KeyRingSize);
+        Assert.False(kp.HasSharedKey);
+    }
+
+    [Theory]
+    [InlineData(Proto.KeyDerivationFunction.Pbkdf2)]
+    [InlineData(Proto.KeyDerivationFunction.Hkdf)]
+    public void RoomOptions_ToProto_MapsKeyDerivationFunction(Proto.KeyDerivationFunction kdf)
+    {
+        var options = new RoomOptions
+        {
+            E2EE = new E2EEOptions
+            {
+                KeyProviderOptions = new KeyProviderOptions { KeyDerivationFunction = kdf },
+            },
+        };
+
+        Assert.Equal(kdf, options.ToProto().Encryption!.KeyProviderOptions.KeyDerivationFunction);
+    }
+
+    [Fact]
+    public void KeyProviderOptions_DefaultsToPbkdf2()
+    {
+        // Upstream's and livekit-client's default for a shared passphrase. Raw per-participant
+        // keys need HKDF and must opt in, which is what the property is for.
+        Assert.Equal(Proto.KeyDerivationFunction.Pbkdf2, new KeyProviderOptions().KeyDerivationFunction);
+    }
 }
