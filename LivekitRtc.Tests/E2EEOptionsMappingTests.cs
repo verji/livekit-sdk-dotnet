@@ -148,16 +148,23 @@ public class E2EEOptionsMappingTests
     }
 
     [Fact]
-    public void RoomOptions_ToProto_DefaultsMatchLivekitClient()
+    public void RoomOptions_ToProto_DefaultsAreTheRustSdkDefaultsWithLivekitClientSalt()
     {
-        // livekit-client's defaults, which every peer in a room must share for frames to
-        // decrypt: the salt is its SALT constant, window 16, failure tolerance -1 (unlimited).
-        var proto = new RoomOptions { E2EE = new E2EEOptions() }.ToProto();
+        // Two kinds of default, pinned for two reasons. The ratchet salt must be the same bytes
+        // on every peer or nothing decrypts; livekit-client's SALT constant is this string.
+        // Window and failure tolerance are receiver-local retry tuning: 16 and -1 are the Rust
+        // SDK's own defaults (livekit-client's are 8 and 10), and what Verji's clients set
+        // explicitly. Encryption type GCM is what a consumer who only sets key options gets.
+        var options = new E2EEOptions();
+        var proto = new RoomOptions { E2EE = options }.ToProto();
         var kp = proto.Encryption!.KeyProviderOptions;
 
+        Assert.Equal(Proto.EncryptionType.Gcm, options.EncryptionType);
+        Assert.Equal(Proto.EncryptionType.Gcm, proto.Encryption.EncryptionType);
         Assert.Equal("LKFrameEncryptionKey", kp.RatchetSalt.ToStringUtf8());
         Assert.Equal(16, kp.RatchetWindowSize);
         Assert.Equal(-1, kp.FailureTolerance);
+        Assert.Equal(16, kp.KeyRingSize);
         Assert.False(kp.HasSharedKey);
     }
 
