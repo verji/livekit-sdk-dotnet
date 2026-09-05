@@ -16,6 +16,14 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SDK="$ROOT/LivekitRtc/rust-sdks"
 PROFILE="${CARGO_RUST_PROFILE:-release}"
 
+# cargo resolves a relative CARGO_TARGET_DIR against the directory it runs in, which is not the
+# caller's; make it absolute here so cargo and the copy below agree on where the library is.
+if [ -n "${CARGO_TARGET_DIR:-}" ]; then
+  mkdir -p "$CARGO_TARGET_DIR"
+  CARGO_TARGET_DIR="$(cd "$CARGO_TARGET_DIR" && pwd)"
+  export CARGO_TARGET_DIR
+fi
+
 case "$(uname -s)" in
   Linux*)                RID="linux-x64"; LIB="liblivekit_ffi.so" ;;
   Darwin*)               RID="osx-$([ "$(uname -m)" = "arm64" ] && echo arm64 || echo x64)"; LIB="liblivekit_ffi.dylib" ;;

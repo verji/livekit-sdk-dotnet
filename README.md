@@ -23,12 +23,13 @@ sync. The upstream README follows below and still describes the API.
 ```bash
 git clone --recurse-submodules https://github.com/verji/livekit-sdk-dotnet
 scripts/build-native.sh        # livekit_ffi for the host, into LivekitRtc/runtimes/<rid>/native/
-scripts/generate-proto.sh      # LivekitRtc/Proto/*.g.cs from the submodule's FFI protocol (protoc on PATH)
+scripts/generate-proto.sh      # LivekitRtc/Proto/*.g.cs from the submodule's FFI protocol (protoc 25.2 on PATH)
 dotnet build LivekitRtc.Tests/LivekitRtc.Tests.csproj
 ```
 
-The generated protos are committed; CI regenerates them and fails on drift. Native libraries are
-never committed. `CARGO_RUST_PROFILE=dev scripts/build-native.sh` gives an unstripped debug native.
+The generated protos are committed; CI regenerates them with **protoc 25.2** and fails on drift, so
+regenerate with that exact version (a different protoc emits different bytes for the same protocol).
+Native libraries are never committed. `CARGO_RUST_PROFILE=dev scripts/build-native.sh` gives an unstripped debug native.
 The submodule has submodules of its own (`libyuv`, `protocol`); a non-recursive checkout fails in
 `yuv-sys` with a message saying so. On Windows, `LivekitApi` (upstream's server package, not built
 here for its own sake but referenced by the tests) trips CSharpier's line-ending check; build with

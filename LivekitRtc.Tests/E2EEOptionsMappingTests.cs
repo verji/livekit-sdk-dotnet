@@ -135,4 +135,56 @@ public class E2EEOptionsMappingTests
         Assert.Equal(3, keyProvider.FailureTolerance);
         Assert.Equal(24, keyProvider.KeyRingSize);
     }
+
+    [Theory]
+    [InlineData(Proto.EncryptionType.None)]
+    [InlineData(Proto.EncryptionType.Gcm)]
+    [InlineData(Proto.EncryptionType.Custom)]
+    public void RoomOptions_ToProto_PassesEncryptionTypeThrough(Proto.EncryptionType type)
+    {
+        var options = new RoomOptions { E2EE = new E2EEOptions { EncryptionType = type } };
+
+        Assert.Equal(type, options.ToProto().Encryption!.EncryptionType);
+    }
+
+    [Fact]
+    public void RoomOptions_ToProto_DefaultsMatchLivekitClient()
+    {
+        // livekit-client's defaults, which every peer in a room must share for frames to
+        // decrypt: the salt is its SALT constant, window 16, failure tolerance -1 (unlimited).
+        var proto = new RoomOptions { E2EE = new E2EEOptions() }.ToProto();
+        var kp = proto.Encryption!.KeyProviderOptions;
+
+        Assert.Equal("LKFrameEncryptionKey", kp.RatchetSalt.ToStringUtf8());
+        Assert.Equal(16, kp.RatchetWindowSize);
+        Assert.Equal(-1, kp.FailureTolerance);
+        Assert.False(kp.HasSharedKey);
+    }
+
+    [Theory]
+    [InlineData(KeyDerivationFunction.Pbkdf2, Proto.KeyDerivationFunction.Pbkdf2)]
+    [InlineData(KeyDerivationFunction.Hkdf, Proto.KeyDerivationFunction.Hkdf)]
+    public void RoomOptions_ToProto_MapsKeyDerivationFunction(
+        KeyDerivationFunction kdf,
+        Proto.KeyDerivationFunction expected
+    )
+    {
+        var options = new RoomOptions
+        {
+            E2EE = new E2EEOptions
+            {
+                KeyProviderOptions = new KeyProviderOptions { KeyDerivationFunction = kdf },
+            },
+        };
+
+        Assert.Equal(expected, options.ToProto().Encryption!.KeyProviderOptions.KeyDerivationFunction);
+    }
+
+    [Fact]
+    public void KeyProviderOptions_DefaultsToPbkdf2()
+    {
+        // Upstream's and livekit-client's default for a shared passphrase. Raw per-participant
+        // keys need HKDF and must opt in, which is what the property is for.
+        Assert.Equal(KeyDerivationFunction.Pbkdf2, new KeyProviderOptions().KeyDerivationFunction);
+    }
 }
