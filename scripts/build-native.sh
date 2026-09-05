@@ -33,7 +33,8 @@ fi
 (cd "$SDK/livekit-ffi" && cargo build --profile "$PROFILE" ${CARGO_TARGET:+--target "$CARGO_TARGET"} "$@")
 
 PROFILE_DIR="$PROFILE"; [ "$PROFILE" = "dev" ] && PROFILE_DIR="debug"
-BUILT="$SDK/target/${CARGO_TARGET:+$CARGO_TARGET/}$PROFILE_DIR/$LIB"
+TARGET_DIR="${CARGO_TARGET_DIR:-$SDK/target}"
+BUILT="$TARGET_DIR/${CARGO_TARGET:+$CARGO_TARGET/}$PROFILE_DIR/$LIB"
 DEST="$ROOT/LivekitRtc/runtimes/$RID/native"
 mkdir -p "$DEST"
 cp "$BUILT" "$DEST/$LIB"

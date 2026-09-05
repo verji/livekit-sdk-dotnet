@@ -29,6 +29,10 @@ dotnet build LivekitRtc.Tests/LivekitRtc.Tests.csproj
 
 The generated protos are committed; CI regenerates them and fails on drift. Native libraries are
 never committed. `CARGO_RUST_PROFILE=dev scripts/build-native.sh` gives an unstripped debug native.
+The submodule has submodules of its own (`libyuv`, `protocol`); a non-recursive checkout fails in
+`yuv-sys` with a message saying so. On Windows, `LivekitApi` (upstream's server package, not built
+here for its own sake but referenced by the tests) trips CSharpier's line-ending check; build with
+`-p:CSharpier_Bypass=true` there. CI runs on Linux, where the check passes.
 
 **Bumping the fork pin:** check out the wanted `verji-main` commit inside `LivekitRtc/rust-sdks`,
 run `scripts/generate-proto.sh`, build, commit the submodule and the regenerated protos together.
