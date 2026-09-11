@@ -1406,10 +1406,11 @@ namespace LiveKit.Rtc
                     }
                 }
 
+                var encryptionType = evt.User.EncryptionType;
                 DispatchEvent(() =>
                     DataReceived?.Invoke(
                         this,
-                        new DataReceivedEventArgs(data, participant, kind, topic)
+                        new DataReceivedEventArgs(data, participant, kind, topic, encryptionType)
                     )
                 );
             }

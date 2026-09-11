@@ -175,17 +175,26 @@ namespace LiveKit.Rtc
         /// </summary>
         public string? Topic { get; }
 
+        /// <summary>
+        /// How the packet was encrypted on the wire. A room with encryption enabled still delivers
+        /// a packet its sender published in the clear, as <see cref="Proto.EncryptionType.None"/>,
+        /// so a receiver that requires encryption can refuse it.
+        /// </summary>
+        public Proto.EncryptionType EncryptionType { get; }
+
         internal DataReceivedEventArgs(
             byte[] data,
             Participant? participant,
             Proto.DataPacketKind kind,
-            string? topic
+            string? topic,
+            Proto.EncryptionType encryptionType
         )
         {
             Data = data;
             Participant = participant;
             Kind = kind;
             Topic = topic;
+            EncryptionType = encryptionType;
         }
     }
 

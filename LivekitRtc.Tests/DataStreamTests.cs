@@ -109,6 +109,84 @@ public class DataStreamTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task PublishData_WithE2EE_ReceiverSeesThePacketEncrypted()
+    {
+        var received = await PublishOnceToAnEncryptedReceiverAsync(
+            "test-data-e2ee-room",
+            senderEncrypts: true,
+            Encoding.UTF8.GetBytes("encrypted")
+        );
+
+        Assert.Equal("encrypted", Encoding.UTF8.GetString(received.Data));
+        Assert.Equal(Proto.EncryptionType.Gcm, received.EncryptionType);
+    }
+
+    [Fact]
+    public async Task PublishData_SentInTheClear_EncryptedReceiverSeesThePacketUnencrypted()
+    {
+        // Encryption does not stop a room delivering a packet its sender published in the clear:
+        // the receiver is the only one who can refuse it, and the event is what tells it to.
+        var received = await PublishOnceToAnEncryptedReceiverAsync(
+            "test-data-clear-room",
+            senderEncrypts: false,
+            Encoding.UTF8.GetBytes("in the clear")
+        );
+
+        Assert.Equal("in the clear", Encoding.UTF8.GetString(received.Data));
+        Assert.Equal(Proto.EncryptionType.None, received.EncryptionType);
+    }
+
+    private async Task<DataReceivedEventArgs> PublishOnceToAnEncryptedReceiverAsync(
+        string roomName,
+        bool senderEncrypts,
+        byte[] payload
+    )
+    {
+        var sharedKey = new byte[32];
+        new Random(42).NextBytes(sharedKey);
+        RoomOptions Encrypted() =>
+            new()
+            {
+                E2EE = new E2EEOptions
+                {
+                    KeyProviderOptions = new KeyProviderOptions
+                    {
+                        SharedKey = sharedKey,
+                        RatchetWindowSize = E2EEDefaults.RatchetWindowSize,
+                        FailureTolerance = E2EEDefaults.FailureTolerance,
+                    },
+                    EncryptionType = Proto.EncryptionType.Gcm,
+                },
+            };
+
+        _room1 = new Room();
+        _room2 = new Room();
+
+        var received = new TaskCompletionSource<DataReceivedEventArgs>(
+            TaskCreationOptions.RunContinuationsAsynchronously
+        );
+        _room2.DataReceived += (_, e) => received.TrySetResult(e);
+
+        await _room2.ConnectAsync(
+            _fixture.LiveKitUrl,
+            _fixture.CreateToken($"{roomName}-receiver", roomName),
+            Encrypted()
+        );
+        await _room1.ConnectAsync(
+            _fixture.LiveKitUrl,
+            _fixture.CreateToken($"{roomName}-sender", roomName),
+            senderEncrypts ? Encrypted() : new RoomOptions()
+        );
+        await Task.Delay(1000);
+
+        await _room1.LocalParticipant!.PublishDataAsync(
+            payload,
+            new DataPublishOptions { Reliable = true }
+        );
+        return await received.Task.WaitAsync(TimeSpan.FromSeconds(5));
+    }
+
+    [Fact]
     public async Task PublishData_WithTopic_ReceiverGetsTopicedData()
     {
         const string roomName = "test-data-topic-room";
