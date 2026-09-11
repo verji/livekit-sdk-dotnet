@@ -1371,7 +1371,7 @@ namespace LiveKit.Rtc
             );
         }
 
-        private void HandleDataPacketReceived(Proto.DataPacketReceived evt)
+        internal void HandleDataPacketReceived(Proto.DataPacketReceived evt)
         {
             if (evt == null)
                 return;

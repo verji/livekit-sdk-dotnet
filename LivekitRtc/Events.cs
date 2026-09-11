@@ -180,6 +180,12 @@ namespace LiveKit.Rtc
         /// a packet its sender published in the clear, as <see cref="Proto.EncryptionType.None"/>,
         /// so a receiver that requires encryption can refuse it.
         /// </summary>
+        /// <remarks>
+        /// For a packet that arrived encrypted this is the encryption the receiving room decrypted it
+        /// with, not the type the packet declares, which travels in the clear. A native library that
+        /// predates the field reports <see cref="Proto.EncryptionType.None"/> for every packet, so a
+        /// receiver that requires encryption refuses them rather than trusting them.
+        /// </remarks>
         public Proto.EncryptionType EncryptionType { get; }
 
         internal DataReceivedEventArgs(
