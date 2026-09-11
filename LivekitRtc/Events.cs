@@ -184,8 +184,9 @@ namespace LiveKit.Rtc
         /// <remarks>
         /// Never the type the packet declares, which travels in the clear where any hop can rewrite
         /// it. For a packet reported as anything but <see cref="Proto.EncryptionType.None"/>,
-        /// <see cref="Participant"/> is the participant whose key decrypted it, or null if that
-        /// participant is not in the room. That holds with a key per participant; with a shared key,
+        /// <see cref="Participant"/> is the participant whose key decrypted it, or null if that is not
+        /// a remote participant of this room, as for a packet of its own that the SFU sends back. That
+        /// holds with a key per participant; with a shared key,
         /// which identity a packet decrypts under is only the SFU's word. A room configured with
         /// <see cref="Proto.EncryptionType.None"/> reports it even for a packet it decrypted, and
         /// attributes that packet as it would one in the clear. A native library that predates the
