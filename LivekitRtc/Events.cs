@@ -176,15 +176,18 @@ namespace LiveKit.Rtc
         public string? Topic { get; }
 
         /// <summary>
-        /// How the packet was encrypted on the wire. A room with encryption enabled still delivers
-        /// a packet its sender published in the clear, as <see cref="Proto.EncryptionType.None"/>,
-        /// so a receiver that requires encryption can refuse it.
+        /// How the packet arrived: the encryption this room is configured with, for a packet it
+        /// decrypted, or <see cref="Proto.EncryptionType.None"/> for a packet published in the clear,
+        /// which a room with encryption enabled still delivers and a receiver that requires
+        /// encryption can refuse.
         /// </summary>
         /// <remarks>
-        /// For a packet that arrived encrypted this is the encryption the receiving room decrypted it
-        /// with, not the type the packet declares, which travels in the clear. A native library that
-        /// predates the field reports <see cref="Proto.EncryptionType.None"/> for every packet, so a
-        /// receiver that requires encryption refuses them rather than trusting them.
+        /// Never the type the packet declares, which travels in the clear where any hop can rewrite
+        /// it. For a decrypted packet <see cref="Participant"/> is the participant whose key decrypted
+        /// it, or null if that participant is not in the room. A room configured with
+        /// <see cref="Proto.EncryptionType.None"/> reports it even for a packet it decrypted. A native
+        /// library that predates the field reports <see cref="Proto.EncryptionType.None"/> for every
+        /// packet, so a receiver that requires encryption refuses them rather than trusting them.
         /// </remarks>
         public Proto.EncryptionType EncryptionType { get; }
 

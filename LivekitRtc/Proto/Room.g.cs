@@ -27182,8 +27182,9 @@ namespace LiveKit.Proto {
 
     private global::LiveKit.Proto.EncryptionType encryptionType_;
     /// <summary>
-    /// How the packet was encrypted on the wire. NONE in a room with encryption enabled is a packet
-    /// its sender published in the clear.
+    /// How the packet arrived: the encryption this room is configured with, for a packet it decrypted,
+    /// or NONE for a packet published in the clear, which a room with encryption enabled still
+    /// delivers. Never the type the packet declares, which travels in the clear.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
