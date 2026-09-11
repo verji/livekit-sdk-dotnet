@@ -175,17 +175,39 @@ namespace LiveKit.Rtc
         /// </summary>
         public string? Topic { get; }
 
+        /// <summary>
+        /// How the packet arrived: the encryption this room is configured with, for a packet it
+        /// decrypted, or <see cref="Proto.EncryptionType.None"/> for a packet published in the clear,
+        /// which a room with encryption enabled still delivers and a receiver that requires
+        /// encryption can refuse.
+        /// </summary>
+        /// <remarks>
+        /// Never the type the packet declares, which travels in the clear where any hop can rewrite
+        /// it. For a packet reported as anything but <see cref="Proto.EncryptionType.None"/>,
+        /// <see cref="Participant"/> is the participant whose key decrypted it, or null if that is not
+        /// a remote participant of this room, as for a packet of its own that the SFU sends back. That
+        /// holds with a key per participant; with a shared key,
+        /// which identity a packet decrypts under is only the SFU's word. A room configured with
+        /// <see cref="Proto.EncryptionType.None"/> reports it even for a packet it decrypted, and
+        /// attributes that packet as it would one in the clear. A native library that predates the
+        /// field reports <see cref="Proto.EncryptionType.None"/> for every packet, so a receiver that
+        /// requires encryption refuses them rather than trusting them.
+        /// </remarks>
+        public Proto.EncryptionType EncryptionType { get; }
+
         internal DataReceivedEventArgs(
             byte[] data,
             Participant? participant,
             Proto.DataPacketKind kind,
-            string? topic
+            string? topic,
+            Proto.EncryptionType encryptionType
         )
         {
             Data = data;
             Participant = participant;
             Kind = kind;
             Topic = topic;
+            EncryptionType = encryptionType;
         }
     }
 

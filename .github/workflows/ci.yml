@@ -152,7 +152,7 @@ jobs:
       - name: Test
         run: >
           dotnet test LivekitRtc.Tests/LivekitRtc.Tests.csproj -c Release --no-build
-          --filter "FullyQualifiedName~E2EEOptionsMappingTests|FullyQualifiedName~TrackPublishOptionsMappingTests|FullyQualifiedName~FfiClientTest|FullyQualifiedName~AudioCaptureMinimalTest"
+          --filter "FullyQualifiedName~E2EEOptionsMappingTests|FullyQualifiedName~DataReceivedMappingTests|FullyQualifiedName~TrackPublishOptionsMappingTests|FullyQualifiedName~FfiClientTest|FullyQualifiedName~AudioCaptureMinimalTest"
           --logger "console;verbosity=normal"
 
       - name: Pack
