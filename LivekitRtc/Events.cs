@@ -183,11 +183,14 @@ namespace LiveKit.Rtc
         /// </summary>
         /// <remarks>
         /// Never the type the packet declares, which travels in the clear where any hop can rewrite
-        /// it. For a decrypted packet <see cref="Participant"/> is the participant whose key decrypted
-        /// it, or null if that participant is not in the room. A room configured with
-        /// <see cref="Proto.EncryptionType.None"/> reports it even for a packet it decrypted. A native
-        /// library that predates the field reports <see cref="Proto.EncryptionType.None"/> for every
-        /// packet, so a receiver that requires encryption refuses them rather than trusting them.
+        /// it. For a packet reported as anything but <see cref="Proto.EncryptionType.None"/>,
+        /// <see cref="Participant"/> is the participant whose key decrypted it, or null if that
+        /// participant is not in the room. That holds with a key per participant; with a shared key,
+        /// which identity a packet decrypts under is only the SFU's word. A room configured with
+        /// <see cref="Proto.EncryptionType.None"/> reports it even for a packet it decrypted, and
+        /// attributes that packet as it would one in the clear. A native library that predates the
+        /// field reports <see cref="Proto.EncryptionType.None"/> for every packet, so a receiver that
+        /// requires encryption refuses them rather than trusting them.
         /// </remarks>
         public Proto.EncryptionType EncryptionType { get; }
 
